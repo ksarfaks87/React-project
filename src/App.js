@@ -4,8 +4,8 @@ import React, { useRef, useState } from "react";
 
 import "./styles/index.sass";
 import PostList from "./components/PostList";
-import MyButton from "./components/ui/button/MyButton";
-import MyInput from "./components/ui/input/MyInput";
+
+import NewPostForm from "./components/NewPostForm";
 
 const App = () => {
   const [posts, setPosts] = useState([
@@ -14,34 +14,22 @@ const App = () => {
     { id: 3, title: "Java", body: "Description" },
   ]);
 
-  const [title, setTitle] = useState("");
-  // const [description, setDescription] = useState("");
-  const descriptionInput = useRef(); //НЕуправляемый инпут
-  console.log(title);
+  const createPost = (newPost) => {
+    setPosts([...posts, newPost]);
+  };
 
-  const addNewPost = (e) => {
-    e.preventDefault();
-    console.log(descriptionInput.current.value); //НЕуправляемый инпут получение данных из инпута
+  const removePost = (post) => {
+    setPosts(posts.filter((p) => p.id !== post.id));
   };
 
   return (
     <div className="App">
-      <form className="addForm" action="" onSubmit={addNewPost}>
-        <MyInput
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          type="text"
-          placeholder="Название поста"
-        />
-
-        <MyInput
-          ref={descriptionInput}
-          type="text"
-          placeholder="Описание поста"
-        />
-        <MyButton>Создать пост</MyButton>
-      </form>
-      <PostList posts={posts} title="Список постов 1" />
+      <NewPostForm create={createPost} />
+      {posts.length === 0 ? (
+        <h1 className="noPosts">Посты не найдены!</h1>
+      ) : (
+        <PostList posts={posts} remove={removePost} title="Список постов 1" />
+      )}
     </div>
   );
 };
