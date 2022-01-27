@@ -33,12 +33,12 @@ const App = () => {
           type="text"
           placeholder="Название поста"
         />
-        <input type="text" ref={descriptionInput} />
-        {/* <MyInput
+
+        <MyInput
           ref={descriptionInput}
           type="text"
           placeholder="Описание поста"
-        /> */}
+        />
         <MyButton>Создать пост</MyButton>
       </form>
       <PostList posts={posts} title="Список постов 1" />
